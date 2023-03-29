@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProductsStore.Models.dbContext;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProductsStore.Controllers
@@ -17,7 +15,7 @@ namespace ProductsStore.Controllers
         {
             using (HardCodeContext db = new HardCodeContext())
             {
-                List<Product> products =  await db.Products.ToListAsync();
+                List<Product> products = await db.Products.ToListAsync();
 
                 if (products.Count == 0)
                 {

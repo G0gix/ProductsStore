@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using ProductsStore.Models.MainModels;
+﻿using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
@@ -57,13 +54,11 @@ namespace ProductsStore.Models.dbContext
                 entity.HasOne(d => d.Category)
                     .WithMany()
                     .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Category_Fields_Categories");
+                    .HasConstraintName("FK_Category_Fields_Categories1");
 
                 entity.HasOne(d => d.Field)
                     .WithMany()
                     .HasForeignKey(d => d.FieldId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Category_Fields_Fields");
             });
 
@@ -101,13 +96,11 @@ namespace ProductsStore.Models.dbContext
                 entity.HasOne(d => d.Field)
                     .WithMany()
                     .HasForeignKey(d => d.FieldId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProductFields_Fields");
 
                 entity.HasOne(d => d.Product)
                     .WithMany()
                     .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProductFields_Products");
             });
 
