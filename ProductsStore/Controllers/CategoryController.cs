@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ProductsStore.Models.dbContext;
 using ProductsStore.Models.MainModels;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace ProductsStore.Controllers
@@ -22,7 +24,7 @@ namespace ProductsStore.Controllers
 
                 if (categoryList.Count == 0)
                 {
-                    NotFound();
+                    return NotFound();
                 }
 
                 return Ok(categoryList);
@@ -37,7 +39,7 @@ namespace ProductsStore.Controllers
                 var category = await db.Categories.FindAsync(id);
                 if (category == null)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
 
                 db.Categories.Remove(category);
@@ -50,9 +52,9 @@ namespace ProductsStore.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] CategoryModel category)
         {
-            if (category == null)
+            if (category == null || string.IsNullOrEmpty(category.Name))
             {
-                return BadRequest();
+                return BadRequest("The input parameter cannot be empty");
             }
 
             using (HardCodeContext db = new HardCodeContext())
