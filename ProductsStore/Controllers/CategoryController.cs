@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProductsStore.Models.dbContext;
+using ProductsStore.Models.MainModels;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace ProductsStore.Controllers
         {
             using (HardCodeContext db = new HardCodeContext())
             {
-                var category = db.Categories.Find(id);
+                var category = await db.Categories.FindAsync(id);
                 if (category == null)
                 {
                     return NotFound();
@@ -42,6 +43,28 @@ namespace ProductsStore.Controllers
                 db.Categories.Remove(category);
                 await db.SaveChangesAsync();
 
+                return Ok();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory([FromBody] CategoryModel category)
+        {
+            if (category == null)
+            {
+                return BadRequest();
+            }
+
+            using (HardCodeContext db = new HardCodeContext())
+            {
+                Category newCategory = new Category()
+                {
+                    Products = null,
+                    Name = category.Name,
+                };
+
+                await db.Categories.AddAsync(newCategory);
+                await db.SaveChangesAsync();
                 return Ok();
             }
         }
