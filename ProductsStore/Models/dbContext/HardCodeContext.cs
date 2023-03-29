@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using ProductsStore.Models.MainModels;
 
 #nullable disable
 
@@ -11,13 +11,11 @@ namespace ProductsStore.Models.dbContext
     {
         public HardCodeContext()
         {
-            
         }
 
         public HardCodeContext(DbContextOptions<HardCodeContext> options)
             : base(options)
         {
-            
         }
 
         public virtual DbSet<Category> Categories { get; set; }
@@ -89,7 +87,6 @@ namespace ProductsStore.Models.dbContext
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Products_Categories");
             });
 

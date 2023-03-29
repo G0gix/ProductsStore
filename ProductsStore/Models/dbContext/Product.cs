@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ProductsStore.Models.MainModels;
 
 #nullable disable
 
@@ -11,7 +12,7 @@ namespace ProductsStore.Models.dbContext
         public string Name { get; set; }
         public string Description { get; set; }
         public byte[] Photo { get; set; }
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
     }
